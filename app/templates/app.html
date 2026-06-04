@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Features</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafafa; color: #333; }
+        
+        nav { background: white; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        nav .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { font-size: 24px; font-weight: 700; color: #FF6B6B; }
+        nav .nav-link a { color: #666; text-decoration: none; font-weight: 500; }
+        nav .nav-link a:hover { color: #FF6B6B; }
+        
+        .hero { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 60px 20px; text-align: center; }
+        .hero .container { max-width: 800px; margin: 0 auto; }
+        .hero .emoji { font-size: 60px; margin-bottom: 15px; }
+        .hero h1 { color: #FF6B6B; font-size: 40px; margin-bottom: 15px; font-weight: 700; }
+        .hero p { color: #666; font-size: 16px; line-height: 1.5; }
+        
+        .features { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .feature-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+        .feature-card .icon { font-size: 40px; margin-bottom: 15px; }
+        .feature-card h3 { color: #FF6B6B; margin-bottom: 10px; font-size: 18px; }
+        .feature-card p { color: #666; line-height: 1.6; font-size: 14px; }
+        
+        .button-group { text-align: center; margin: 40px 0; }
+        a { color: white; text-decoration: none; padding: 14px 32px; background-color: #FF6B6B; border-radius: 8px; display: inline-block; font-weight: 600; transition: background 0.3s, transform 0.2s; }
+        a:hover { background-color: #FF5252; transform: translateY(-2px); }
+        .back-link { text-align: center; margin-bottom: 30px; }
+        .back-link a { background-color: transparent; color: #666; padding: 0; }
+        .back-link a:hover { color: #FF6B6B; }
+        
+        footer { background: #333; color: white; padding: 30px 20px; text-align: center; margin-top: 60px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">🤖 AI Chat</div>
+            <div class="nav-link">
+                <a href="{{ url_for('main.index') }}">← Home</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="emoji">✨</div>
+            <h1>Explore AI Features</h1>
+            <p>Discover the power of advanced artificial intelligence at your fingertips</p>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon">💬</div>
+                <h3>Ask AI Questions</h3>
+                <p>Get instant, intelligent responses to any question. Our AI is trained to provide helpful, accurate, and thoughtful answers.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Experience blazing-fast response times. Get answers within seconds, no waiting or loading delays.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🧠</div>
+                <h3>Advanced AI</h3>
+                <p>Powered by Llama 3.1, one of the most intelligent models available today.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Private & Secure</h3>
+                <p>Your conversations are completely private. Only accessible to you when you're logged in.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">📚</div>
+                <h3>Learn & Grow</h3>
+                <p>Use AI to expand your knowledge, solve problems, and discover new ideas.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon">🌟</div>
+                <h3>Always Improving</h3>
+                <p>Our AI model is continuously improved to provide better answers and assistance.</p>
+            </div>
+        </div>
+    </section>
+    
+    <div class="button-group">
+        <a href="{{ url_for('main.ask') }}">Start Asking Questions</a>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 AI Assistant. Made with ❤️</p>
+    </footer>
+</body>
+</html>

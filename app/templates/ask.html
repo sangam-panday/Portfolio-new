@@ -1,0 +1,90 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask AI - AI Assistant</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafafa; color: #333; }
+        
+        nav { background: white; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        nav .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { font-size: 24px; font-weight: 700; color: #FF6B6B; }
+        nav .nav-link a { color: #666; text-decoration: none; font-weight: 500; }
+        nav .nav-link a:hover { color: #FF6B6B; }
+        
+        .hero { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 50px 20px; }
+        .hero .container { max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 40px; color: #FF6B6B; margin-bottom: 15px; font-weight: 700; }
+        .hero .subtitle { font-size: 16px; color: #666; }
+        
+        .content { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        
+        .ask-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        .ask-section h2 { color: #333; margin-bottom: 20px; font-size: 20px; }
+        
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input[type="text"] { padding: 14px 16px; border: 2px solid #f0f0f0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s; font-family: inherit; }
+        input[type="text"]:focus { outline: none; border-color: #FF6B6B; }
+        input[type="submit"] { padding: 14px; background: #FF6B6B; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background 0.3s, transform 0.2s; font-family: inherit; }
+        input[type="submit"]:hover { background: #FF5252; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3); }
+        
+        .answer-section { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 30px; border-radius: 12px; border-left: 4px solid #FF6B6B; }
+        .question-box { margin-bottom: 20px; }
+        .question-label { color: #FF6B6B; font-weight: 600; font-size: 14px; margin-bottom: 5px; }
+        .question-text { color: #333; font-size: 16px; font-weight: 500; }
+        .answer-label { color: #FF6B6B; font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; margin-top: 15px; }
+        .answer-text { color: #333; line-height: 1.8; font-size: 15px; }
+        
+        .back { margin-bottom: 20px; }
+        .back a { color: #666; text-decoration: none; font-size: 14px; }
+        .back a:hover { color: #FF6B6B; }
+        
+        footer { background: #333; color: white; padding: 30px 20px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">🤖 AI Chat</div>
+            <div class="nav-link">
+                <a href="{{ url_for('main.index') }}">← Home</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>💭 Ask AI Anything</h1>
+            <p class="subtitle">Get intelligent answers powered by Llama 3.1</p>
+        </div>
+    </section>
+    
+    <div class="content">
+        <div class="ask-section">
+            <h2>What's on your mind?</h2>
+            <form method="post" action="{{ url_for('main.ask') }}">
+                <input type="text" name="question" placeholder="Ask me anything..." required>
+                <input type="submit" value="Get Answer">
+            </form>
+        </div>
+        
+        {% if answer %}
+            <div class="answer-section">
+                <div class="question-box">
+                    <div class="question-label">❓ Question:</div>
+                    <div class="question-text">{{ question }}</div>
+                </div>
+                <hr style="border: none; border-top: 1px solid rgba(255, 107, 107, 0.3); margin: 20px 0;">
+                <div class="answer-label">💡 Answer:</div>
+                <p class="answer-text">{{ answer }}</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 AI Assistant. Made with ❤️</p>
+    </footer>
+</body>
+</html>
