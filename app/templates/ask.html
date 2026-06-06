@@ -3,85 +3,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ask AI - AI Assistant</title>
+    <title>AI Chat</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafafa; color: #333; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background: #fff; color: #0d0d0d; height: 100vh; display: flex; flex-direction: column; }
         
-        nav { background: white; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        nav .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav .logo { font-size: 24px; font-weight: 700; color: #FF6B6B; }
-        nav .nav-link a { color: #666; text-decoration: none; font-weight: 500; }
-        nav .nav-link a:hover { color: #FF6B6B; }
+        .chat-container { display: flex; flex-direction: column; height: 100vh; }
         
-        .hero { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 50px 20px; }
-        .hero .container { max-width: 800px; margin: 0 auto; }
-        .hero h1 { font-size: 40px; color: #FF6B6B; margin-bottom: 15px; font-weight: 700; }
-        .hero .subtitle { font-size: 16px; color: #666; }
+        header { background: #fff; border-bottom: 1px solid #d1d5db; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+        header .logo { font-size: 20px; font-weight: 600; }
+        header a { color: #0d0d0d; text-decoration: none; font-size: 14px; }
+        header a:hover { color: #666; }
         
-        .content { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .chat-history { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
         
-        .ask-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 30px; }
-        .ask-section h2 { color: #333; margin-bottom: 20px; font-size: 20px; }
+        .message { display: flex; gap: 12px; animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        form { display: flex; flex-direction: column; gap: 15px; }
-        input[type="text"] { padding: 14px 16px; border: 2px solid #f0f0f0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s; font-family: inherit; }
-        input[type="text"]:focus { outline: none; border-color: #FF6B6B; }
-        input[type="submit"] { padding: 14px; background: #FF6B6B; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: background 0.3s, transform 0.2s; font-family: inherit; }
-        input[type="submit"]:hover { background: #FF5252; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3); }
+        .message.user { justify-content: flex-end; }
+        .message.user .content { background: #10a37f; color: white; border-radius: 12px; padding: 12px 16px; max-width: 70%; word-wrap: break-word; }
         
-        .answer-section { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 30px; border-radius: 12px; border-left: 4px solid #FF6B6B; }
-        .question-box { margin-bottom: 20px; }
-        .question-label { color: #FF6B6B; font-weight: 600; font-size: 14px; margin-bottom: 5px; }
-        .question-text { color: #333; font-size: 16px; font-weight: 500; }
-        .answer-label { color: #FF6B6B; font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; margin-top: 15px; }
-        .answer-text { color: #333; line-height: 1.8; font-size: 15px; }
+        .message.ai { justify-content: flex-start; }
+        .message.ai .content { background: #f0f0f0; color: #0d0d0d; border-radius: 12px; padding: 12px 16px; max-width: 70%; word-wrap: break-word; line-height: 1.5; }
         
-        .back { margin-bottom: 20px; }
-        .back a { color: #666; text-decoration: none; font-size: 14px; }
-        .back a:hover { color: #FF6B6B; }
+        .input-area { border-top: 1px solid #d1d5db; padding: 16px; background: #fff; }
+        .input-wrapper { display: flex; gap: 10px; max-width: 900px; margin: 0 auto; width: 100%; }
         
-        footer { background: #333; color: white; padding: 30px 20px; text-align: center; margin-top: 50px; }
+        form { display: flex; gap: 10px; width: 100%; }
+        input[type="text"] { flex: 1; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; font-family: inherit; }
+        input[type="text"]:focus { outline: none; border-color: #10a37f; box-shadow: 0 0 0 2px rgba(16, 163, 127, 0.1); }
+        input[type="submit"] { padding: 12px 24px; background: #10a37f; color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+        input[type="submit"]:hover { background: #0d8f6f; }
+        input[type="submit"]:disabled { background: #d1d5db; cursor: not-allowed; }
+        
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 20px; color: #999; }
+        .empty-state svg { width: 60px; height: 60px; opacity: 0.3; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">🤖 AI Chat</div>
-            <div class="nav-link">
-                <a href="{{ url_for('main.index') }}">← Home</a>
-            </div>
-        </div>
-    </nav>
-    
-    <section class="hero">
-        <div class="container">
-            <h1>💭 Ask AI Anything</h1>
-            <p class="subtitle">Get intelligent answers powered by Llama 3.1</p>
-        </div>
-    </section>
-    
-    <div class="content">
-        <div class="ask-section">
-            <h2>What's on your mind?</h2>
-            <form method="post" action="{{ url_for('main.ask') }}">
-                <input type="text" name="question" placeholder="Ask me anything..." required>
-                <input type="submit" value="Get Answer">
-            </form>
+    <div class="chat-container">
+        <header>
+            <div class="logo">💬 AI Chat</div>
+            <a href="{{ url_for('main.index') }}">← Home</a>
+        </header>
+        
+        <div class="chat-history">
+            {% if previous_chats or answer %}
+                {% for chat in previous_chats %}
+                    <div class="message user">
+                        <div class="content">{{ chat.question }}</div>
+                    </div>
+                    <div class="message ai">
+                        <div class="content">{{ chat.answer }}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div style="font-size: 48px;">🤖</div>
+                    <div>Ask me anything</div>
+                </div>
+            {% endif %}
         </div>
         
-        {% if answer %}
-            <div class="answer-section">
-                <div class="question-box">
-                    <div class="question-label">❓ Question:</div>
-                    <div class="question-text">{{ question }}</div>
-                </div>
-                <hr style="border: none; border-top: 1px solid rgba(255, 107, 107, 0.3); margin: 20px 0;">
-                <div class="answer-label">💡 Answer:</div>
-                <p class="answer-text">{{ answer }}</p>
+        <div class="input-area">
+            <div class="input-wrapper">
+                <form method="post" action="{{ url_for('main.ask') }}">
+                    <input type="text" name="question" placeholder="Message AI..." required autofocus>
+                    <input type="submit" value="Send">
+                </form>
             </div>
-        {% endif %}
+        </div>
     </div>
+    <script>
+        // Auto-scroll to bottom
+        const chatHistory = document.querySelector('.chat-history');
+        if (chatHistory) {
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    </script>
+</body>
     
     <footer>
         <p>&copy; 2026 AI Assistant. Made with ❤️</p>
