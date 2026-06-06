@@ -15,28 +15,28 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
-        username = request.form.get('username')
+        email = request.form.get('email')
         password = request.form.get('password')
 
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.app_page'))
         else:
-            return render_template('login.html', error='Invalid username or password')
+            return render_template('login.html', error='Invalid email or password')
 
 @auth_bp.route('/register', methods = ['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        username = request.form.get('username')
+        email = request.form.get('email')
         password = request.form.get('password')
 
-        #username handling
-        if username is None or username.strip() == '':
-            return render_template('register.html', error='Username cannot be empty')
+        #email handling
+        if email is None or email.strip() == '':
+            return render_template('register.html', error='Email cannot be empty')
 
         #password handling
         if password is None or password.strip() == '':
@@ -46,11 +46,11 @@ def register():
             return render_template('register.html', error='Password must be at least 6 characters long')
 
         hashed_password = generate_password_hash(password)
-        new_user = User(username=username, password=hashed_password)
+        new_user = User(email=email, password=hashed_password)
 
 
-        if User.query.filter_by(username=username).first():
-            return render_template('register.html', error='Username already exists')
+        if User.query.filter_by(email=email).first():
+            return render_template('register.html', error='Email already exists')
         
         db.session.add(new_user)
         db.session.commit()
