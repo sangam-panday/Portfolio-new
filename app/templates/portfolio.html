@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sangam Panday - Portfolio</title>
+  <style>
+    /* Base styles */
+:root {
+  --primary: #2C3E50;
+  --accent: #3498DB;
+  --text: #2C3E50;
+  --text-light: #718096;
+  --bg-light: #f7fafc;
+  --white: #ffffff;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 4rem;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.nav-content {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.scrolled .logo {
+  color: var(--primary);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.scrolled .nav-links a {
+  color: var(--text);
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.scrolled .mobile-menu-btn {
+  color: var(--primary);
+}
+
+/* Hero Section */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-img {
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto 2rem;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.typing-text {
+  display: inline-block;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  border-right: 2px solid var(--accent);
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3.5s steps(40, end),
+             blink-caret 0.75s step-end infinite;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.social-links a {
+  color: var(--white);
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.1);
+}
+
+/* About Section */
+.about {
+  padding: 5rem 0;
+  background: var(--white);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.education {
+  margin-top: 2rem;
+}
+
+.education-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.education-item svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.progress-card {
+  background: var(--bg-light);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: #e2e8f0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 1rem;
+  transition: width 1s ease-out;
+}
+
+/* Skills Section */
+.skills {
+  padding: 5rem 0;
+  background: var(--bg-light);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.skill-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+  transform: scale(1.05);
+}
+
+.skill-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.skill-header img {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Experience Section */
+.experience {
+  padding: 5rem 0;
+  background: var(--white);
+}
+
+.experience-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--bg-light);
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+}
+
+.experience-header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.experience-header svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tech-tags span {
+  padding: 0.25rem 0.75rem;
+  background: rgba(52, 152, 219, 0.1);
+  color: var(--accent);
+  border-radius: 1rem;
+  font-size: 0.875rem;
+}
+
+/* Contact Section */
+.contact {
+  padding: 5rem 0;
+  background: var(--bg-light);
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background: #2980b9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--accent) }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .typing-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .profile-img {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .skill-card {
+    padding: 1rem;
+  }
+}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <div class="nav-content">
+        <a href="#home" class="logo">SP</a>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+          <a href="{{ url_for('main.index_page') }}">Projects</a>
+        </div>
+        <button class="mobile-menu-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80" alt="Background" class="hero-bg">
+    <div class="container">
+      <div class="hero-content">
+        <div class="profile-img">
+          <img src="{{ url_for('static', filename='photos/sangam.jpg') }}" alt="Sangam Panday">
+        </div>
+        <h1 class="animate-fadeIn">Sangam Panday</h1>
+        <div class="typing-text animate-slideUp">
+          <span>Computer Engineering Student | Developer</span>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/sangam-panday" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/sangam-panday-16730a32a/" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=100093609144995" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/sangampanday7/" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="mailto:sangampanday09@gmail.com">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="container">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <div class="about-content">
+          <p>
+            I am a passionate Computer Engineering student currently in my 3rd semester at Kantipur City College. 
+            With a strong foundation in programming and problem-solving, I am constantly seeking opportunities 
+            to learn and grow in the field of technology.
+          </p>
+          <div class="education">
+            <h3>Education</h3>
+            <div class="education-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              <div>
+                <h4>Bachelor's in Computer Engineering</h4>
+                <p class="school">Kantipur City College</p>
+                <p class="status">Current</p>
+              </div>
+            </div>
+            <div class="education-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+              <div>
+                <h4>+2 in Computer Engineering</h4>
+                <p class="school">Himalayan Secondary School</p>
+                <p class="gpa">GPA: 3.7</p>
+              </div>
+            </div>
+            <div class="education-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+              <div>
+                <h4>SEE Computer Engineering</h4>
+                <p class="gpa">GPA: 3.56</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card">
+          <h3>Academic Progress</h3>
+          <div class="progress-content">
+            <div class="semester-progress">
+              <div class="progress-header">
+                <span>Current Progress</span>
+                <span class="progress-fraction">3/8 Semesters</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 37.5%"></div>
+              </div>
+            </div>
+            <div class="semester-results">
+              <h4>Semester Results</h4>
+              <div class="result-item">
+                <span>First Semester</span>
+                <span class="gpa">GPA: 3.63</span>
+              </div>
+              <div class="result-item">
+                <span>Second Semester</span>
+                <span class="in-progress">In Progress</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
+            <h3>C</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>90%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 90%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++">
+            <h3>C++</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>85%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" alt="C#">
+            <h3>C#</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>80%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+            <h3>Python</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>75%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+            <h3>HTML</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>95%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 95%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-header">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+            <h3>CSS</h3>
+          </div>
+          <div class="skill-progress">
+            <div class="progress-header">
+              <span>Proficiency</span>
+              <span>85%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 85%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="experience">
+    <div class="container">
+      <h2>Experience</h2>
+      <div class="experience-card">
+        <div class="experience-header">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <div>
+            <h3>OJT Experience</h3>
+            <p>
+              1+ year of hands-on experience through On-the-Job Training, working on various projects 
+              and gaining practical knowledge in software development.
+            </p>
+          </div>
+        </div>
+        <div class="experience-details">
+          <div class="responsibilities">
+            <h4>Key Responsibilities</h4>
+            <ul>
+              <li>Developed and maintained web applications</li>
+              <li>Collaborated with senior developers on project implementations</li>
+              <li>Participated in code reviews and testing procedures</li>
+              <li>Assisted in documentation and technical specifications</li>
+            </ul>
+          </div>
+          <div class="technologies">
+            <h4>Technologies Used</h4>
+            <div class="tech-tags">
+              <span>C++</span>
+              <span>Python</span>
+              <span>HTML</span>
+              <span>CSS</span>
+              <span>Git</span>
+              <span>VS Code</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2>Contact Me</h2>
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="5" required></textarea>
+        </div>
+        <button type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu functionality
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 0) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Form submission
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = {
+        name: form.querySelector('#name').value,
+        email: form.querySelector('#email').value,
+        message: form.querySelector('#message').value
+      };
+      console.log('Form submitted:', formData);
+      form.reset();
+    });
+
+    // Skills data
+const skills = [
+    { 
+        name: 'C', 
+        level: 85,
+        logo: 'https://cdn.simpleicons.org/c/A8B9CC'
+    },
+    { 
+        name: 'C++', 
+        level: 80,
+        logo: 'https://cdn.simpleicons.org/cplusplus/00599C'
+    },
+    { 
+        name: 'C#', 
+        level: 75,
+        logo: 'https://cdn.simpleicons.org/csharp/239120'
+    },
+    { 
+        name: 'Python', 
+        level: 70,
+        logo: 'https://cdn.simpleicons.org/python/3776AB'
+    },
+    { 
+        name: 'HTML', 
+        level: 90,
+        logo: 'https://cdn.simpleicons.org/html5/E34F26'
+    },
+    { 
+        name: 'CSS', 
+        level: 85,
+        logo: 'https://cdn.simpleicons.org/css3/1572B6'
+    }
+];
+
+// Semester data
+const semesters = [
+    { number: 1, status: 'completed' },
+    { number: 2, status: 'completed' },
+    { number: 3, status: 'ongoing' },
+    { number: 4, status: 'upcoming' },
+    { number: 5, status: 'upcoming' },
+    { number: 6, status: 'upcoming' },
+    { number: 7, status: 'upcoming' },
+    { number: 8, status: 'upcoming' }
+];
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+    initializeSemesters();
+    initializeSkills();
+    initializeAnimations();
+    initializeForm();
+});
+
+// Initialize semesters grid
+function initializeSemesters() {
+    const semesterGrid = document.querySelector('.semester-grid');
+    semesters.forEach(sem => {
+        const semesterCard = document.createElement('div');
+        semesterCard.className = `semester-card ${sem.status} fade-in`;
+        semesterCard.innerHTML = `
+            <p class="font-semibold">Semester ${sem.number}</p>
+            <p class="status">${sem.status}</p>
+        `;
+        semesterGrid.appendChild(semesterCard);
+    });
+}
+
+// Initialize skills grid
+function initializeSkills() {
+    const skillsGrid = document.querySelector('.skills-grid');
+    skills.forEach(skill => {
+        const skillCard = document.createElement('div');
+        skillCard.className = 'skill-card fade-in';
+        skillCard.innerHTML = `
+            <div class="skill-header">
+                <img src="${skill.logo}" alt="${skill.name} logo" class="skill-logo">
+                <h3>${skill.name}</h3>
+            </div>
+            <div class="skill-bar">
+                <div class="skill-progress" style="width: 0%"></div>
+            </div>
+            <p>${skill.level}%</p>
+        `;
+        skillsGrid.appendChild(skillCard);
+    });
+}
+
+// Initialize animations
+function initializeAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                if (entry.target.classList.contains('skill-card')) {
+                    const progressBar = entry.target.querySelector('.skill-progress');
+                    const level = entry.target.querySelector('p').textContent.replace('%', '');
+                    setTimeout(() => {
+                        progressBar.style.width = `${level}%`;
+                    }, 200);
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+// Initialize contact form
+function initializeForm() {
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would typically handle form submission
+        alert('Message sent successfully!');
+        form.reset();
+    });
+}
+
+// Sticky navigation
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll <= 0) {
+        navbar.style.transform = 'translateY(0)';
+        return;
+    }
+
+    if (currentScroll > lastScroll && !navbar.classList.contains('scroll-down')) {
+        navbar.style.transform = 'translateY(-100%)';
+    } else if (currentScroll < lastScroll && navbar.classList.contains('scroll-down')) {
+        navbar.style.transform = 'translateY(0)';
+    }
+
+    lastScroll = currentScroll;
+    });
+  </script>
+</body>
+</html>
