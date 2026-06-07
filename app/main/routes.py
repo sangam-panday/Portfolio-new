@@ -24,6 +24,13 @@ def ask():
         question = request.form.get('question')
         answer = ask_ai(question, current_user.id)
         
+        print(f"Question: {question}")
+        print(f"Answer: {answer}")
+
+
+        print("FORM:", request.form)
+        print("JSON:", request.get_json(silent=True))
+
         # Return JSON for AJAX requests
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or 'application/json' in request.headers.get('Accept', ''):
             return jsonify({'answer': answer})
