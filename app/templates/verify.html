@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register — AI Assistant</title>
+    <title>Verify Email — AI Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -22,8 +22,8 @@
             --accent: #e8a045;
             --accent-dim: rgba(232,160,69,0.12);
             --accent-glow: rgba(232,160,69,0.22);
-            --danger: #e85555;
-            --danger-dim: rgba(232,85,85,0.1);
+            --success: #34d399;
+            --success-dim: rgba(52,211,153,0.1);
             --font-display: 'Playfair Display', serif;
             --font-body: 'DM Sans', sans-serif;
             --font-mono: 'DM Mono', monospace;
@@ -67,11 +67,11 @@
 
         .card-mark { width: 48px; height: 48px; border-radius: 14px; background: var(--accent-dim); border: 1px solid rgba(232,160,69,0.25); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
         .card-title { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; margin-bottom: 6px; }
-        .card-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; }
+        .card-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 32px; line-height: 1.5; }
 
         .error-box {
             display: flex; align-items: flex-start; gap: 10px;
-            background: var(--danger-dim);
+            background: rgba(232,85,85,0.1);
             border: 1px solid rgba(232,85,85,0.25);
             border-radius: 10px;
             padding: 12px 14px;
@@ -81,8 +81,6 @@
 
         .form-group { margin-bottom: 18px; }
         label { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; font-family: var(--font-mono); margin-bottom: 7px; }
-        input[type="email"],
-        input[type="password"],
         input[type="text"] {
             width: 100%; padding: 11px 14px;
             background: var(--surface-2);
@@ -92,12 +90,10 @@
             color: var(--text);
             outline: none;
             transition: border-color 0.18s, box-shadow 0.18s;
+            letter-spacing: 0.15em;
+            text-align: center;
         }
-        input[type="email"]::placeholder,
-        input[type="password"]::placeholder,
         input[type="text"]::placeholder { color: var(--text-faint); }
-        input[type="email"]:focus,
-        input[type="password"]:focus,
         input[type="text"]:focus {
             border-color: rgba(232,160,69,0.5);
             box-shadow: 0 0 0 3px rgba(232,160,69,0.1);
@@ -117,9 +113,9 @@
         input[type="submit"]:hover { background: #f0aa55; transform: translateY(-1px); box-shadow: 0 6px 22px var(--accent-glow); }
         input[type="submit"]:active { transform: translateY(0); }
 
-        .perks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-        .perk { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--text-muted); }
-        .perk-check { width: 16px; height: 16px; border-radius: 50%; background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3); display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; }
+        .hint { font-size: 12px; color: var(--text-muted); margin-top: 16px; text-align: center; }
+        .hint a { color: var(--accent); text-decoration: none; }
+        .hint a:hover { text-decoration: underline; }
 
         .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
         .divider-line { flex: 1; height: 1px; background: var(--border); }
@@ -136,34 +132,26 @@
 
     <div class="card">
         <a href="{{ url_for('main.index') }}" class="back-link">← Back to home</a>
-        <div class="card-mark">✦</div>
-        <div class="card-title">Create account</div>
-        <div class="card-sub">Join thousands using AI to get things done.</div>
-
-        <div class="perks">
-            <div class="perk"><div class="perk-check">✓</div> Free to use, no credit card required</div>
-            <div class="perk"><div class="perk-check">✓</div> Instant AI responses, 24/7</div>
-            <div class="perk"><div class="perk-check">✓</div> Private & secure conversations</div>
-        </div>
+        <div class="card-mark">✉️</div>
+        <div class="card-title">Verify your email</div>
+        <div class="card-sub">We sent a verification code to your inbox. Enter it below to complete your registration.</div>
 
         {% if error %}
             <div class="error-box">⚠ {{ error }}</div>
         {% endif %}
 
-        <form method="post" action="{{ url_for('auth.register') }}">
+        <form method="post" action="{{ url_for('auth.verify') }}">
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                <label for="otp">Verification Code</label>
+                <input type="text" id="otp" name="otp" placeholder="000000" maxlength="6" required autofocus>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Create a strong password" required>
-            </div>
-            <input type="submit" value="Create Account →">
+            <input type="submit" value="Verify & Continue →">
         </form>
 
+        <p class="hint">Didn't receive the code? <a href="{{ url_for('auth.register') }}">Try again</a></p>
+
         <div class="divider"><div class="divider-line"></div><span>or</span><div class="divider-line"></div></div>
-        <p class="footer-link">Already have an account? <a href="{{ url_for('auth.login') }}">Sign in</a></p>
+        <p class="footer-link">Already verified? <a href="{{ url_for('auth.login') }}">Sign in to your account</a></p>
     </div>
 </body>
 </html>

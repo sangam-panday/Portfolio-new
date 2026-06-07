@@ -1,107 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Assistant - Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant — Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafafa; color: #333; }
-        
-        nav { background: white; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
-        nav .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav .logo { font-size: 24px; font-weight: 700; color: #FF6B6B; }
-        nav .nav-links a { color: #666; text-decoration: none; margin: 0 15px; font-weight: 500; transition: color 0.3s; }
-        nav .nav-links a:hover { color: #FF6B6B; }
-        
-        .hero { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 80px 20px; text-align: center; }
-        .hero .container { max-width: 800px; margin: 0 auto; }
-        .hero h1 { font-size: 56px; color: #FF6B6B; margin-bottom: 20px; font-weight: 700; }
-        .hero .subtitle { font-size: 20px; color: #666; margin-bottom: 30px; line-height: 1.5; }
-        .hero .emoji { font-size: 80px; margin-bottom: 20px; }
-        
-        .cta-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; cursor: pointer; border: none; font-size: 16px; transition: all 0.3s; }
-        .btn-primary { background: #FF6B6B; color: white; }
-        .btn-primary:hover { background: #FF5252; transform: translateY(-2px); box-shadow: 0 8px 16px rgba(255, 107, 107, 0.3); }
-        .btn-secondary { background: white; color: #FF6B6B; border: 2px solid #FF6B6B; }
-        .btn-secondary:hover { background: #FFE5E5; }
-        
-        .features { max-width: 1200px; margin: 80px auto; padding: 0 20px; }
-        .features h2 { text-align: center; font-size: 36px; margin-bottom: 50px; color: #333; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .feature-card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
-        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
-        .feature-card .icon { font-size: 48px; margin-bottom: 15px; }
-        .feature-card h3 { color: #FF6B6B; margin-bottom: 12px; font-size: 20px; }
-        .feature-card p { color: #666; line-height: 1.6; }
-        
-        .user-section { text-align: center; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); max-width: 600px; margin: 0 auto; }
-        .user-section p { font-size: 16px; margin-bottom: 10px; }
-        .user-section strong { color: #FF6B6B; }
-        
-        footer { background: #333; color: white; padding: 40px 20px; text-align: center; margin-top: 80px; }
-        footer p { opacity: 0.8; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0c0c0e;
+            --surface: #141416;
+            --surface-2: #1c1c20;
+            --surface-3: #242428;
+            --border: rgba(255,255,255,0.06);
+            --border-md: rgba(255,255,255,0.11);
+            --text: #eeedf2;
+            --text-muted: #8c8b97;
+            --text-faint: #4a4955;
+            --accent: #e8a045;
+            --accent-dim: rgba(232,160,69,0.12);
+            --accent-glow: rgba(232,160,69,0.25);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --radius: 14px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* NAV */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; height: 64px;
+            background: rgba(12,12,14,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+        .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .nav-links { display: flex; align-items: center; gap: 6px; }
+        .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; padding: 7px 14px; border-radius: 8px; border: 1px solid transparent; transition: all 0.18s; }
+        .nav-links a:hover { color: var(--text); background: var(--surface-2); border-color: var(--border); }
+        .nav-links a.primary { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+        .nav-links a.primary:hover { background: #f0aa55; }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            min-height: calc(100vh - 64px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 80px 24px;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(232,160,69,0.08) 0%, transparent 70%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0; pointer-events: none;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 7px;
+            font-size: 11px; font-family: var(--font-mono); color: var(--accent);
+            padding: 5px 12px; border-radius: 999px;
+            border: 1px solid rgba(232,160,69,0.3);
+            background: var(--accent-dim);
+            margin-bottom: 28px;
+            animation: fadeDown 0.6s ease both;
+        }
+        .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 7vw, 80px);
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin-bottom: 20px;
+            animation: fadeDown 0.6s 0.1s ease both;
+        }
+        .hero h1 em { color: var(--accent); font-style: normal; }
+        .hero-sub {
+            font-size: 17px; color: var(--text-muted); max-width: 480px; line-height: 1.65;
+            margin-bottom: 40px;
+            animation: fadeDown 0.6s 0.2s ease both;
+        }
+        .hero-greeting { font-size: 16px; color: var(--accent); font-weight: 500; margin-bottom: 24px; animation: fadeDown 0.6s 0.15s ease both; }
+        .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeDown 0.6s 0.3s ease both; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.18s; cursor: pointer; border: none; font-family: var(--font-body); }
+        .btn-primary { background: var(--accent); color: #0c0c0e; box-shadow: 0 4px 20px var(--accent-glow); }
+        .btn-primary:hover { background: #f0aa55; transform: translateY(-1px); box-shadow: 0 8px 28px var(--accent-glow); }
+        .btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border-md); }
+        .btn-ghost:hover { background: var(--surface-3); border-color: rgba(255,255,255,0.18); }
+
+        /* FEATURES */
+        .features-section { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
+        .section-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+        .section-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px); font-weight: 600; color: var(--text); letter-spacing: -0.02em; margin-bottom: 56px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .feature-card { background: var(--surface); padding: 32px; transition: background 0.2s; }
+        .feature-card:hover { background: var(--surface-2); }
+        .feat-icon { font-size: 28px; margin-bottom: 16px; }
+        .feat-title { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+        .feat-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+        /* USER SECTION */
+        .user-section { text-align: center; padding: 80px 24px; }
+        .user-card { display: inline-block; background: var(--surface); border: 1px solid var(--border-md); border-radius: var(--radius); padding: 36px 48px; }
+        .user-card p { font-size: 15px; color: var(--text-muted); margin-bottom: 6px; }
+        .user-card strong { color: var(--accent); }
+
+        footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
+
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">🤖 AI Chat</div>
-            <div class="nav-links">
-                {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.ask') }}">Ask AI</a>
-                    <a href="{{ url_for('auth.logout') }}">Logout</a>
-                {% else %}
-                    <a href="{{ url_for('auth.login') }}">Login</a>
-                    <a href="{{ url_for('auth.register') }}">Register</a>
-                {% endif %}
-            </div>
+
+<nav>
+    <div class="logo">
+        <div class="logo-mark">✦</div>
+        AI Assistant
+    </div>
+    <div class="nav-links">
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.ask') }}" class="primary">Ask AI</a>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="primary">Get Started</a>
+        {% endif %}
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-badge"><span class="badge-dot"></span> Powered by Llama 3.1</div>
+    <h1>Intelligence,<br>on <em>demand</em></h1>
+    <p class="hero-sub">Ask questions, get instant answers. Your personal AI assistant for research, writing, code, and everything in between.</p>
+
+    {% if current_user.is_authenticated %}
+        <p class="hero-greeting">Welcome back, {{ current_user.username }} —</p>
+        <div class="cta-row">
+            <a href="{{ url_for('main.ask') }}" class="btn btn-primary">Open Chat →</a>
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-ghost">Logout</a>
         </div>
-    </nav>
-    
-    <section class="hero">
-        <div class="container">
-            <div class="emoji">✨</div>
-            <h1>Welcome to AI Assistant</h1>
-            <p class="subtitle">Ask questions, get instant answers. Powered by advanced AI technology.</p>
-            
-            {% if current_user.is_authenticated %}
-                <p style="margin: 20px 0; font-size: 18px; color: #FF6B6B;">👋 Hello, <strong>{{ current_user.username }}</strong>!</p>
-                <div class="cta-buttons">
-                    <a href="{{ url_for('main.ask') }}" class="btn btn-primary">Start Asking Questions</a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn btn-secondary">Logout</a>
-                </div>
-            {% else %}
-                <div class="cta-buttons">
-                    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
-                    <a href="{{ url_for('auth.register') }}" class="btn btn-secondary">Create Account</a>
-                </div>
-            {% endif %}
+    {% else %}
+        <div class="cta-row">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Create Free Account →</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-ghost">Sign In</a>
         </div>
-    </section>
-    
-    <section class="features">
-        <h2>Why Use Our AI?</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Get instant responses to your questions within seconds. No waiting, no delays.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🧠</div>
-                <h3>Highly Intelligent</h3>
-                <p>Powered by Llama 3.1, one of the most advanced AI models available today.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon">🔒</div>
-                <h3>Private & Secure</h3>
-                <p>Your conversations are private and secure. Only accessible to you.</p>
-            </div>
+    {% endif %}
+</section>
+
+<section class="features-section">
+    <div class="section-label">Why use it</div>
+    <div class="section-title">Everything you need,<br>nothing you don't.</div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feat-icon">⚡</div>
+            <div class="feat-title">Lightning Fast</div>
+            <div class="feat-desc">Responses within seconds. No waiting, no delays — just instant, useful answers every time.</div>
         </div>
-    </section>
-    
-    <footer>
-        <p>&copy; 2026 AI Assistant. Made with ❤️</p>
-    </footer>
+        <div class="feature-card">
+            <div class="feat-icon">🧠</div>
+            <div class="feat-title">Highly Intelligent</div>
+            <div class="feat-desc">Powered by Llama 3.1, one of the most capable AI models. Nuanced answers to complex questions.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feat-icon">🔒</div>
+            <div class="feat-title">Private & Secure</div>
+            <div class="feat-desc">Your conversations are yours alone — private, secure, and only accessible when you're logged in.</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    &copy; 2026 AI Assistant — Made with ❤️
+</footer>
+
 </body>
 </html>

@@ -1,9 +1,11 @@
 Flask==2.3.0
 Flask-SQLAlchemy==3.0.5
 Flask-Login==0.6.2
+Flask-Migrate==4.0.5
+Flask-Mail==0.9.1
 Werkzeug==2.3.0
 langchain-huggingface>=0.0.11
 langchain-core>=0.1.0
 huggingface-hub>=0.19.0
 pydantic>=2.0
-Flask-Migrate==4.0.5
+python-dotenv

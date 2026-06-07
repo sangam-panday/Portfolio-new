@@ -1,105 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI Features</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Features — AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fafafa; color: #333; }
-        
-        nav { background: white; padding: 20px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        nav .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav .logo { font-size: 24px; font-weight: 700; color: #FF6B6B; }
-        nav .nav-link a { color: #666; text-decoration: none; font-weight: 500; }
-        nav .nav-link a:hover { color: #FF6B6B; }
-        
-        .hero { background: linear-gradient(135deg, #FFE5E5 0%, #FFF5F0 100%); padding: 60px 20px; text-align: center; }
-        .hero .container { max-width: 800px; margin: 0 auto; }
-        .hero .emoji { font-size: 60px; margin-bottom: 15px; }
-        .hero h1 { color: #FF6B6B; font-size: 40px; margin-bottom: 15px; font-weight: 700; }
-        .hero p { color: #666; font-size: 16px; line-height: 1.5; }
-        
-        .features { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
-        .feature-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
-        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
-        .feature-card .icon { font-size: 40px; margin-bottom: 15px; }
-        .feature-card h3 { color: #FF6B6B; margin-bottom: 10px; font-size: 18px; }
-        .feature-card p { color: #666; line-height: 1.6; font-size: 14px; }
-        
-        .button-group { text-align: center; margin: 40px 0; }
-        a { color: white; text-decoration: none; padding: 14px 32px; background-color: #FF6B6B; border-radius: 8px; display: inline-block; font-weight: 600; transition: background 0.3s, transform 0.2s; }
-        a:hover { background-color: #FF5252; transform: translateY(-2px); }
-        .back-link { text-align: center; margin-bottom: 30px; }
-        .back-link a { background-color: transparent; color: #666; padding: 0; }
-        .back-link a:hover { color: #FF6B6B; }
-        
-        footer { background: #333; color: white; padding: 30px 20px; text-align: center; margin-top: 60px; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0c0c0e;
+            --surface: #141416;
+            --surface-2: #1c1c20;
+            --surface-3: #242428;
+            --border: rgba(255,255,255,0.06);
+            --border-md: rgba(255,255,255,0.11);
+            --text: #eeedf2;
+            --text-muted: #8c8b97;
+            --text-faint: #4a4955;
+            --accent: #e8a045;
+            --accent-dim: rgba(232,160,69,0.12);
+            --accent-glow: rgba(232,160,69,0.22);
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --radius: 14px;
+        }
+        body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px; height: 64px;
+            background: rgba(12,12,14,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .logo { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+        .logo-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .nav-back { font-size: 13px; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); transition: all 0.18s; }
+        .nav-back:hover { color: var(--text); background: var(--surface-2); border-color: var(--border-md); }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 90px 24px 70px;
+            overflow: hidden;
+        }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 65% 55% at 50% 40%, rgba(232,160,69,0.07) 0%, transparent 70%); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-family: var(--font-mono); color: var(--accent); padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(232,160,69,0.3); background: var(--accent-dim); margin-bottom: 24px; }
+        .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(36px, 6vw, 60px); font-weight: 700; letter-spacing: -0.03em; color: var(--text); margin-bottom: 16px; }
+        .hero h1 em { color: var(--accent); font-style: normal; }
+        .hero-sub { font-size: 16px; color: var(--text-muted); max-width: 460px; margin: 0 auto; line-height: 1.65; }
+
+        .features-section { max-width: 1060px; margin: 0 auto; padding: 60px 24px 80px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 60px; }
+        .feature-card { background: var(--surface); padding: 32px; transition: background 0.2s; position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
+        .feature-card:hover { background: var(--surface-2); }
+        .feature-card:hover::before { opacity: 1; }
+        .feat-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+        .feat-num { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); margin-bottom: 8px; }
+        .feat-title { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 9px; }
+        .feat-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+        .cta-block { text-align: center; padding: 56px 40px; background: var(--surface); border: 1px solid var(--border-md); border-radius: 20px; }
+        .cta-block h2 { font-family: var(--font-display); font-size: 30px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 10px; }
+        .cta-block p { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; font-family: var(--font-body); background: var(--accent); color: #0c0c0e; box-shadow: 0 4px 20px var(--accent-glow); transition: all 0.18s; }
+        .btn:hover { background: #f0aa55; transform: translateY(-1px); box-shadow: 0 8px 28px var(--accent-glow); }
+
+        footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 12px; color: var(--text-faint); font-family: var(--font-mono); }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">🤖 AI Chat</div>
-            <div class="nav-link">
-                <a href="{{ url_for('main.index') }}">← Home</a>
-            </div>
+
+<nav>
+    <div class="logo"><div class="logo-mark">✦</div>AI Assistant</div>
+    <a href="{{ url_for('main.index') }}" class="nav-back">← Home</a>
+</nav>
+
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-badge"><span class="badge-dot"></span> What's inside</div>
+    <h1>Built for <em>real</em> intelligence</h1>
+    <p class="hero-sub">Explore what our AI can do — from answering questions to solving complex problems.</p>
+</section>
+
+<section class="features-section">
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feat-num">01</div>
+            <span class="feat-icon">💬</span>
+            <div class="feat-title">Ask AI Questions</div>
+            <div class="feat-desc">Get instant, intelligent responses to any question. Accurate, thoughtful, and genuinely helpful every time.</div>
         </div>
-    </nav>
-    
-    <section class="hero">
-        <div class="container">
-            <div class="emoji">✨</div>
-            <h1>Explore AI Features</h1>
-            <p>Discover the power of advanced artificial intelligence at your fingertips</p>
+        <div class="feature-card">
+            <div class="feat-num">02</div>
+            <span class="feat-icon">⚡</span>
+            <div class="feat-title">Lightning Fast</div>
+            <div class="feat-desc">Responses within seconds. No waiting, no delays — just immediate answers to keep your flow going.</div>
         </div>
-    </section>
-    
-    <section class="features">
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="icon">💬</div>
-                <h3>Ask AI Questions</h3>
-                <p>Get instant, intelligent responses to any question. Our AI is trained to provide helpful, accurate, and thoughtful answers.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Experience blazing-fast response times. Get answers within seconds, no waiting or loading delays.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="icon">🧠</div>
-                <h3>Advanced AI</h3>
-                <p>Powered by Llama 3.1, one of the most intelligent models available today.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="icon">🔒</div>
-                <h3>Private & Secure</h3>
-                <p>Your conversations are completely private. Only accessible to you when you're logged in.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="icon">📚</div>
-                <h3>Learn & Grow</h3>
-                <p>Use AI to expand your knowledge, solve problems, and discover new ideas.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="icon">🌟</div>
-                <h3>Always Improving</h3>
-                <p>Our AI model is continuously improved to provide better answers and assistance.</p>
-            </div>
+        <div class="feature-card">
+            <div class="feat-num">03</div>
+            <span class="feat-icon">🧠</span>
+            <div class="feat-title">Advanced AI Core</div>
+            <div class="feat-desc">Powered by Llama 3.1 — one of the most capable and nuanced AI models available today.</div>
         </div>
-    </section>
-    
-    <div class="button-group">
-        <a href="{{ url_for('main.ask') }}">Start Asking Questions</a>
+        <div class="feature-card">
+            <div class="feat-num">04</div>
+            <span class="feat-icon">🔒</span>
+            <div class="feat-title">Private & Secure</div>
+            <div class="feat-desc">Your conversations are completely private. Only you have access — full stop.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feat-num">05</div>
+            <span class="feat-icon">📚</span>
+            <div class="feat-title">Learn & Grow</div>
+            <div class="feat-desc">Use AI to expand your knowledge, solve hard problems, and discover ideas you hadn't considered.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feat-num">06</div>
+            <span class="feat-icon">🌟</span>
+            <div class="feat-title">Always Improving</div>
+            <div class="feat-desc">The model is continuously refined for better answers, sharper reasoning, and more helpful assistance.</div>
+        </div>
     </div>
-    
-    <footer>
-        <p>&copy; 2026 AI Assistant. Made with ❤️</p>
-    </footer>
+
+    <div class="cta-block">
+        <h2>Ready to get started?</h2>
+        <p>Ask your first question and experience the difference.</p>
+        <a href="{{ url_for('main.ask') }}" class="btn">Open Chat →</a>
+    </div>
+</section>
+
+<footer>&copy; 2026 AI Assistant — Made with ❤️</footer>
+
 </body>
 </html>

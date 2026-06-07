@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from flask_login import login_required, current_user
 from app.models import ChatHistory
 from app.services.ai_service import ask_ai
@@ -23,6 +23,11 @@ def ask():
     else:
         question = request.form.get('question')
         answer = ask_ai(question, current_user.id)
-        # Fetch updated chat history after saving
+        
+        # Return JSON for AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest' or 'application/json' in request.headers.get('Accept', ''):
+            return jsonify({'answer': answer})
+        
+        # Return HTML for regular form submissions
         previous_chats = ChatHistory.query.filter_by(user_id=current_user.id).order_by(ChatHistory.timestamp.asc()).all()
-        return render_template('ask.html', previous_chats=previous_chats, question=question, answer=answer)
+        return render_template('ask.html', previous_chats=previous_chats)
