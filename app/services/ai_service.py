@@ -8,15 +8,22 @@ from pydantic import BaseModel, Field
 from typing import Literal
 import os
 from flask import request, jsonify
+from dotenv import load_dotenv
+load_dotenv()
 
 from app.models import ChatHistory
 from app.extension import db
+
+hf_token = os.getenv("HUGGINGFACEHUB_API_TOKEN")
+if not hf_token:
+    raise ValueError("HUGGINGFACEHUB_API_TOKEN not found in environment variables")
 
 llm = HuggingFaceEndpoint(
     repo_id="meta-llama/Llama-3.1-8B-Instruct",
     task="conversational",
     max_new_tokens=100,
     temperature=0.1,
+    huggingfacehub_api_token=hf_token
 )
 
 chat_model = ChatHuggingFace(llm=llm)
